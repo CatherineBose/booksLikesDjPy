@@ -1,0 +1,57 @@
+Create 4 uSers:
+>>> from apps.books_liked_uploaded.models import *
+>>> User.objects.create(first_name="Isaac",last_name="Newton",email="INewton@gmail.com")
+>>> User.objects.create(first_name="Ike",last_name="Nissan",email="INissan@gmail.com")
+>>> User.objects.create(first_name="Nancy",last_name="Drew",email="INancy@gmail.com")
+>>> User.objects.create(first_name="Nanu",last_name="Nanekar",email="Nanekar@gmail.com")
+
+---------------------------
+Create 2 books
+>>> uploader1 = User.objects.get(id=1)
+>>> Book.objects.create(name="Ruby", desc="Ruby is a OOP language", uploader=uploader1)
+>>> uploader2 = User.objects.get(id=2)
+>>> Book.objects.create(name="Java", desc="Java is a OOP language", uploader=uploader2)
+
+-----------
+Have the first user create 2 books.
+user1 = User.objects.first()
+Book.objects.create(name="Django", desc="Django is a framework", uploader=uploader2)
+Book.objects.create(name="Spring", desc="Spring is a framework", uploader=uploader2)
+book1User1= Book.objects.get(name="Django")
+book1User2= Book.objects.get(name="Spring")
+Book.objects.get(name="Django").uploader = user1
+
+----------
+Have the first user like the last book and the first book
+>>> lastBook = Book.objects.last()
+>>> user1 = User.objects.first()
+>>> firstBook = Book.objects.first()
+>>> firstBook.liked_users.add(user1)
+>>> lastBook.liked_users.add(user1)
+---------------------------
+
+user1.uploaded_books.get(pk=1)
+user1.uploaded_books.filter(name__icontains='J')
+
+ User.objects.first().liked_books.all()
+  User.objects.first().uploaded_books.all()
+
+<QuerySet [Book Object ::
+name: Ruby,
+desc: Ruby is a OOP language,
+uploader: User object,
+liked_users: books_liked_uploaded.User.None, Book Object ::
+name: Ruby,
+desc: Ruby is a OOP language,
+uploader: User object,
+liked_users: books_liked_uploaded.User.None, Book Object ::
+name: Jesson,
+desc:  Ja is a OOP language,
+uploader: User object,
+liked_users: books_liked_uploaded.User.None]>
+
+Book.objects.first().liked_users.all()
+<QuerySet [User object::
+Isaac,
+Newton,
+INewton@gmail.com ]>
